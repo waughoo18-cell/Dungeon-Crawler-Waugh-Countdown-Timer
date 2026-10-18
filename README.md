@@ -1,15 +1,11 @@
-# Dungeon Crawler Waugh Timer — Owlbear Rodeo extension
+# Dungeon Crawler Waugh Timer — Owlbear Rodeo
 
-A synchronized countdown with days, hours, minutes and seconds. The Owlbear Rodeo room's GM can edit the time, start, pause, resume, or reset it. Players see the same timer in their own extension popovers. The clock uses a shared end timestamp so it ticks locally without sending a network request every second.
+## GitHub + Render deployment
+1. Create a public GitHub repository, and upload the contents of this folder (including `public/`, `src.js`, `style.css`, `index.html`, and `package.json`). Do not upload the ZIP itself.
+2. On https://dashboard.render.com choose New > Static Site and connect the GitHub repository.
+3. Set Build Command to `npm install && npm run build` and Publish Directory to `dist`.
+4. Deploy. Wait for the service to show Live, then open `https://YOUR-SITE.onrender.com/manifest.json` and check that JSON loads.
+5. In Owlbear Rodeo, open Extensions and add the extension using the complete manifest URL. Enable it for your room.
+6. DM and players open the extension popover. The GM edits Days, Hours, Minutes, Seconds and clicks Apply Time Live; Start/Pause/Reset also synchronize.
 
-## Run and install
-
-1. Install Node.js 18 or newer.
-2. Run `npm install` then `npm run dev`.
-3. To test, use a public HTTPS tunnel to port 5173, or deploy the built site. For production, run `npm run build` and host the `dist/` folder on an HTTPS static host. Copy `manifest.json` and `icon.svg` into `dist/` after the build (or configure Vite to copy them).
-4. In Owlbear Rodeo, open Extensions, choose to add an extension, and enter `https://YOUR-HOST/manifest.json`.
-5. The GM opens the Dungeon Timer extension, sets a time and clicks **Apply Time Live**. Players open the same extension to view the synchronized timer.
-
-## Important
-
-This version shows the countdown in an Owlbear Rodeo extension popover (not directly on the battle map). Players need to open the extension to see it. Room metadata is shared with everyone in the room. Only the GM's interface has editing controls, and the code checks the GM role before publishing changes. For a hardened public deployment, consult Owlbear Rodeo's SDK security and permissions guidance.
+`public/manifest.json` and `public/icon.svg` are automatically copied into `dist/` by Vite during the build. The timer is a popover, not a persistent map overlay. The app uses Owlbear Rodeo room metadata for shared state, so no database is needed. Players must have the extension open to view the live countdown.
